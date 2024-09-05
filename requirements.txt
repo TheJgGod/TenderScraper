@@ -1,0 +1,6 @@
+selenium
+requests
+opencv-python
+pytesseract
+urllib3
+webdriver-manager
