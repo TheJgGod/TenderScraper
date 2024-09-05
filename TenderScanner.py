@@ -17,9 +17,9 @@ import re
 import urllib3
 
 urlconstant = "https://www.pelitabrunei.gov.bn/Lists/IklanIklan/NewDisplayForm.aspx?ID="
-SenderOfMail = os.environ["SENDER_EMAIL"]
-ReceiverOfMail = os.environ["GROUP_EMAIL"]
-Sender_Pass = os.environ["SENDER_PASS"]
+SenderOfMail = os.environ["sender_email"]
+ReceiverOfMail = os.environ["group_email"]
+PassOfSender = os.environ["sender_pass"]
 
 #Loads the counter of which site to look at
 f = open("PelitaCounter.txt",'r')
@@ -109,7 +109,7 @@ while response.status_code == 200:
 
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
-            server.login(SenderOfMail, Sender_Pass)
+            server.login(SenderOfMail, PassOfSender)
             server.send_message(msg)
 
         print("Email has been sent")
