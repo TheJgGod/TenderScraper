@@ -41,3 +41,12 @@ jobs:
     - name: Run TenderScanner
       run: |
         python TenderScanner.py
+
+    - name: Install Chrome and ChromeDriver
+      run: |
+        brew install --cask google-chrome
+        brew install chromedriver
+
+    - name: Run TenderScanner
+      run: python TenderScanner.py
+      
