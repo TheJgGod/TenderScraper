@@ -48,6 +48,7 @@ while response.status_code == 200:
     driver.get(url)
 
     if "Sorry, something went wrong" in driver.page_source:
+        print("Counter =", counter)
         driver.quit()
         f = open("PelitaCounter.txt",'w')
         f.write(str(counter))
