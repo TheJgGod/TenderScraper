@@ -42,10 +42,6 @@ jobs:
     - name: Install Tesseract OCR
       run: brew install tesseract
 
-    - name: Run TenderScanner
-      run: |
-        python TenderScanner.py
-
     - name: Install Chrome and ChromeDriver
       run: |
         brew install --cask google-chrome
