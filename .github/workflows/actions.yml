@@ -1,6 +1,10 @@
 name: Run TenderScanner.py
 
 on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
   schedule:
     - cron: '30 6 * * *'  # Runs daily at 8 AM UTC
 
