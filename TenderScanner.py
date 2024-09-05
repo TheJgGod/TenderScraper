@@ -17,8 +17,9 @@ import re
 import urllib3
 
 urlconstant = "https://www.pelitabrunei.gov.bn/Lists/IklanIklan/NewDisplayForm.aspx?ID="
-sender_mail = "ryan.riches8@gmail.com"
-receriver_mail = "tenderscraper@googlegroups.com"
+SenderOfMail = os.environ["SENDER_EMAIL"]
+ReceiverOfMail = os.environ["GROUP_EMAIL"]
+Sender_Pass = os.environ["SENDER_PASS"]
 
 #Loads the counter of which site to look at
 f = open("PelitaCounter.txt",'r')
@@ -96,8 +97,6 @@ while response.status_code == 200:
 
 
     try:
-        sender_mail = "ryan.riches8@gmail.com"
-        receiver_mail = "tenderscraper@googlegroups.com"
 
         with open("tendertext.txt", 'r') as textfile:
             email_body = textfile.read()
@@ -105,12 +104,12 @@ while response.status_code == 200:
         msg = EmailMessage()
         msg.set_content(email_body, charset='utf-8')
         msg['Subject'] = "Tender"
-        msg['From'] = sender_mail
-        msg['To'] = receiver_mail
+        msg['From'] = SenderOfMail
+        msg['To'] = ReceiverOfMail
 
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
-            server.login(sender_mail, "vxkn ocvu pcwj jkbw")
+            server.login(SenderOfMail, Sender_Pass)
             server.send_message(msg)
 
         print("Email has been sent")
