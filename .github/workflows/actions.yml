@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 8 * * *'  # Runs daily at 8 AM UTC
 
+env:
+  sender_email: ${{ secrets.SENDER_EMAIL }}
+  sender_pass: ${{ secrets.SENDER_PASS }}
+  group_email: ${{ secrets.GROUP_EMAIL }}
+
 jobs:
   build:
     runs-on: macos-latest
