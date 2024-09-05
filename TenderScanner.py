@@ -43,7 +43,6 @@ driver.maximize_window()
 #url = urlconstant + str(urlpointer)
 url = urlconstant + str(counter)
 response = requests.get(url)
-print(response)
 
 while response.status_code == 200:
     driver.get(url)
@@ -53,7 +52,8 @@ while response.status_code == 200:
         f = open("PelitaCounter.txt",'w')
         f.write(str(counter))
         f.close()
-        sys.exit("Search complete")
+        print("Search complete")
+        sys.exit(0)
 
     image_jpg_nodes = driver.find_elements(By.CSS_SELECTOR, "[data-test=\"photo-grid-masonry-img\"]")
 
