@@ -122,4 +122,3 @@ while response.status_code == 200:
     counter += 1
     url = urlconstant + str(counter)
     response = requests.get(url)
-    print(response)
