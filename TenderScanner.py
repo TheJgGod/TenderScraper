@@ -22,9 +22,8 @@ ReceiverOfMail = os.environ["group_email"]
 PassOfSender = os.environ["sender_pass"]
 
 #Loads the counter of which site to look at
-f = open("PelitaCounter.txt",'r')
-counter = int(f.readline())
-f.close()
+with open("PelitaCounter.txt", 'r') as f:
+        counter = int(f.readline())
 
 # to run Chrome in headless mode
 options = Options()
@@ -50,9 +49,8 @@ while response.status_code == 200:
     if "Sorry, something went wrong" in driver.page_source:
         print("Counter =", counter)
         driver.quit()
-        f = open("PelitaCounter.txt",'w')
-        f.write(str(counter))
-        f.close()
+        with open("PelitaCounter.txt", 'w') as f:
+            f.write(str(counter))
         print("Search complete")
         sys.exit(0)
 
