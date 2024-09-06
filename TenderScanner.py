@@ -22,38 +22,25 @@ ReceiverOfMail = os.environ["group_email"]
 PassOfSender = os.environ["sender_pass"]
 
 #Loads the counter of which site to look at
-with open("PelitaCounter.txt", 'r') as f:
-        counter = int(f.readline())
+def setup_counter():
+    with open("PelitaCounter.txt", 'r') as f:
+        return f.readline()
 
-# to run Chrome in headless mode
-options = Options()
-options.add_argument("--headless") # comment while developing
-
-# initialize a Chrome WerbDriver instance
-# with the specified options
-driver = webdriver.Chrome(
-    service=ChromeService(),
-    options=options
-)
-
-driver.maximize_window()
-
-#The actual URL of the PelitaBrunei site
-#url = urlconstant + str(urlpointer)
-url = urlconstant + str(counter)
-response = requests.get(url)
-
-while response.status_code == 200:
-    driver.get(url)
-
-    if "Sorry, something went wrong" in driver.page_source:
-        print("Counter =", counter)
-        driver.quit()
-        with open("PelitaCounter.txt", 'w') as f:
+#Updates the PelitaCounter
+def save_counter(counter):
+    with open("PelitaCounter.txt", 'w') as f:
             f.write(str(counter))
-        print("Search complete")
-        sys.exit(0)
 
+#Function to initialise the chrome webpage
+def setup_webdriver():
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(service=ChromeService(), options=options)
+    driver.maximize_window()
+    return driver
+
+#Function to 
+def imagesearch(driver):
     image_jpg_nodes = driver.find_elements(By.CSS_SELECTOR, "[data-test=\"photo-grid-masonry-img\"]")
 
     image_URLS = []
@@ -61,8 +48,6 @@ while response.status_code == 200:
     image_jpg_nodes = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located((By.TAG_NAME, "img"))
     )
-
-    image_URLS = []
 
     for image_jpg_node in image_jpg_nodes:
         try:
@@ -72,52 +57,85 @@ while response.status_code == 200:
             image_URLS.append(image_url)
         except StaleElementReferenceException:
             continue
+    
+    print("Image URL:", image_URLS[7])
 
-    url = image_URLS[7]
+    return image_URLS[7]
 
-    print("Image url:",url)
+#Finds the url of Pelita Brunei to look at
+def get_next_url(counter, urlconstant):
+    return urlconstant + str(counter)
 
-    response = requests.get(url)
-
-    filename = "PelitaImage.jpg" # You can name the file as you want
-    with open(filename, 'wb') as file:
+#Procedure to install image
+def image_download(image_url):
+    response = requests.get(image_url)
+    with open("PelitaImage.jpg", 'wb') as file:
         file.write(response.content)
-
     print("Image downloaded successfully!")
 
-    file_name = os.path.join(os.path.dirname(__file__), 'PelitaImage.jpg')
-    output_file = os.path.join(os.path.dirname(__file__), 'tendertext.txt')
-
-    image = cv2.imread(file_name)
+#Procedure to extract text from JPEG
+def text_extraction(image_path, output_path):
+    image = cv2.imread(image_path)
     text = pytesseract.image_to_string(image)
-    f = open(output_file,'w')
-    f.write(text)
-    f.close()
+    with open(output_path, 'w') as f:
+        f.write(text)
+    print("Text extracted and saved to file!")
 
-
+#Procedure to send email
+def send_email(sender, receiver, password, email_body, subject="Tender"):
     try:
-
-        with open("tendertext.txt", 'r') as textfile:
-            email_body = textfile.read()
-
         msg = EmailMessage()
         msg.set_content(email_body, charset='utf-8')
-        msg['Subject'] = "Tender"
-        msg['From'] = SenderOfMail
-        msg['To'] = ReceiverOfMail
+        msg['Subject'] = subject
+        msg['From'] = sender
+        msg['To'] = receiver
 
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
-            server.login(SenderOfMail, PassOfSender)
+            server.login(sender, password)
             server.send_message(msg)
-
-        print("Email has been sent")
-
+        print("Email has been sent successfully!")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred while sending email: {e}")
 
-    os.remove("PelitaImage.jpg")
+#Function to read text for the email body
+def read_text(output_file):
+    with open(output_file, 'r') as textfile:
+        return textfile.read()
 
-    counter += 1
-    url = urlconstant + str(counter)
-    response = requests.get(url)
+def __main__():
+    counter = int(setup_counter())
+    site_url = get_next_url(counter, urlconstant)
+    driver = setup_webdriver()
+    response = requests.get(site_url)
+
+    output_file = os.path.join(os.path.dirname(__file__), 'tendertext.txt')
+
+    while response.status_code == 200:
+        driver.get(site_url)
+
+        if "Sorry, something went wrong" in driver.page_source:
+            print("Counter =", counter)
+            driver.quit()
+            save_counter(counter)
+            print("Search complete")
+            sys.exit(0)
+
+        image_url = imagesearch(driver)
+
+        if image_url:
+            image_download(image_url)
+            file_name = os.path.join(os.path.dirname(__file__), 'PelitaImage.jpg')
+            text_extraction(file_name, output_file)
+            email_body = read_text(output_file)
+            send_email(SenderOfMail, ReceiverOfMail, PassOfSender, email_body)
+            os.remove("PelitaImage.jpg")
+
+        counter += 1
+        save_counter(counter)
+        site_url = get_next_url(counter, urlconstant)
+        response = requests.get(site_url)
+    
+    driver.quit()
+
+__main__()
