@@ -39,7 +39,7 @@ def setup_webdriver():
     driver.maximize_window()
     return driver
 
-#Function to 
+#Function to search for image URL
 def imagesearch(driver):
     image_jpg_nodes = driver.find_elements(By.CSS_SELECTOR, "[data-test=\"photo-grid-masonry-img\"]")
 
