@@ -44,7 +44,9 @@ jobs:
 
     - name: Install Chrome and ChromeDriver
       run: |
-        brew install --cask google-chrome
+        if ! brew list --cask google-chrome &>/dev/null; then
+          brew install --cask google-chrome
+        fi
         brew install --cask chromedriver
 
     - name: Run TenderScanner
