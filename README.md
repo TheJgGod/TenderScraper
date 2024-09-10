@@ -76,7 +76,8 @@ This program will search through the Iklan Tawaran category on the Pelita Brunei
 4. Since you won’t be able to use github secrets you must replace the SenderOfMail, ReceiverOfMail, PassOfSender assignment to the actual values you wish to use.
 5. Recommended to use an app password for the PassOfSender which has limited access to the email account in case the password is leaked.
 
-<ins>Setup (github):</ins> \n
+<ins>Setup (github):</ins>
+
 The modules must be installed in the specific versions specified by the requirements document
 
 In the settings of the github repository, under actions → general → workflow permissions, set it to read and write permissions
@@ -99,9 +100,9 @@ If all subroutines work then you can test the "__main__" subroutine. Run the pro
 
 
 <ins>Improvements:</ins>
-Possibly use AI to filter the titles of tasks so that only certain tasks are send to the email
-Translate to english
-Remove the weird lines where they aren’t words since the image to string conversion reads the logo as if its text to be read
-Add exception handling in more places where it's needed
-Attach the image file to the email
-Improve the run time of the repository
+- Possibly use AI to filter the titles of tasks so that only certain tasks are send to the email
+- Translate to english
+- Remove the weird lines where they aren’t words since the image to string conversion reads the logo as if its text to be read
+- Add exception handling in more places where it's needed
+- Attach the image file to the email
+- Improve the run time of the repository
