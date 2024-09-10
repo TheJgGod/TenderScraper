@@ -47,15 +47,15 @@ Variables:
 - **email_body** - contains the text read from the tendertext file
 
 Subroutines:
-setup_counter - this function will open the PelitaCounter file and returns the value stored in it which points to the exact website of Pelita Brunei to open
-save_counter - this procedure takes the current counter variable as a parameter which points to the next web address to view and saves it in the PelitaCounter file
-setup_webdriver - this function opens a chrome webdriver. It is opened in headless mode so that it does not show the chrome webdriver on the screen (this is only helpful while running locally)
-imagesearch - this function locates all images in the website and appends it to an array. It then appends the image url to an array. The url at position 7 in the array is then returned as that is the jpg which we wish to scan
-get_next_url - this function returns the url of the next site to be opened. It takes counter and the urlconstant as parameters
-Image_download - this procedure uses the image_url as a parameter and uses it to download the image and gives it the name “PelitaImage”
-text_extraction - this procedure takes the image_path and the output_path as parameters. It uses the pytesseract library to scan the image and convert the text to string. It then saves the string to the tendertext file
-send_email - this procedure takes sender, receiver, password, email_body and subject as parameters. It uses these to send an email
-read_text - this function takes the path of the tendertext file as a parameter and reads the text file
+- **setup_counter** - this function will open the PelitaCounter file and returns the value stored in it which points to the exact website of Pelita Brunei to open
+- **save_counter** - this procedure takes the current counter variable as a parameter which points to the next web address to view and saves it in the PelitaCounter file
+- **setup_webdriver** - this function opens a chrome webdriver. It is opened in headless mode so that it does not show the chrome webdriver on the screen (this is only helpful while running locally)
+- **imagesearch** - this function locates all images in the website and appends it to an array. It then appends the image url to an array. The url at position 7 in the array is then returned as that is the jpg which we wish to scan
+- **get_next_url** - this function returns the url of the next site to be opened. It takes counter and the urlconstant as parameters
+- **image_download** - this procedure uses the image_url as a parameter and uses it to download the image and gives it the name “PelitaImage”
+- **text_extraction** - this procedure takes the image_path and the output_path as parameters. It uses the pytesseract library to scan the image and convert the text to string. It then saves the string to the tendertext file
+- **send_email** - this procedure takes sender, receiver, password, email_body and subject as parameters. It uses these to send an email
+- **read_text** - this function takes the path of the tendertext file as a parameter and reads the text file
 
 Main program:
 1. First the value from the Pelita counter is read
