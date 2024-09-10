@@ -4,23 +4,23 @@ This program will search through the Iklan Tawaran category on the Pelita Brunei
 TenderScanner.py
 Modules:
 Selenium
-Allows the program to open a web browser (In this case Chrome)
-Allows the program to interact with web browser (open pages using URL, search through the page and more)
-Used for webscraping
+- Allows the program to open a web browser (In this case Chrome)
+- Allows the program to interact with web browser (open pages using URL, search through the page and more)
+- Used for webscraping
 Requests
-Used for webscraping
+- Used for webscraping
 Email
-Allows the program to log into an email and send an email using that account
+- Allows the program to log into an email and send an email using that account
 cv2
-Allows for image processing
+- Allows for image processing
 Pytesseract
-Used to convert the image file to text
+- Used to convert the image file to text
 smtplib 
-This is the type of email protocol being used to send the email
+- This is the type of email protocol being used to send the email
 re
-This is used to allow for the program to search for the text which indicates that there are no more sites to search
+- This is used to allow for the program to search for the text which indicates that there are no more sites to search
 Urllib3
-Used to open website using URL
+- Used to open website using URL
 
 Variables:
 urlconstant - assigned the main part of the url to direct the website to the iklan tawaran section of the Pelita Brunei website
@@ -48,16 +48,16 @@ send_email - this procedure takes sender, receiver, password, email_body and sub
 read_text - this function takes the path of the tendertext file as a parameter and reads the text file
 
 Main program:
-First the value from the Pelita counter is read
-The url of the site is then obtained and its data is obtained
-The web page is opened
-It then check whether the text “Sorry, something went wrong” is present
-If found then it will close the web browser, save the counter value and end the program
-Otherwise it will find the url of the image which needs to be scanned
-It will then download the image, extract the text from the image and send the information as an email
-Then it will delete the image
-The counter value is then saved and the next web page is opened
-Then steps 3 to 8 are repeated until the response code != 200 or the “Sorry, something went wrong” text is found
+1. First the value from the Pelita counter is read
+2. The url of the site is then obtained and its data is obtained
+3. The web page is opened
+4. It then check whether the text “Sorry, something went wrong” is present
+5. If found then it will close the web browser, save the counter value and end the program
+6. Otherwise it will find the url of the image which needs to be scanned
+7. It will then download the image, extract the text from the image and send the information as an email
+8. Then it will delete the image
+9. The counter value is then saved and the next web page is opened
+10. Then steps 3 to 8 are repeated until the response code != 200 or the “Sorry, something went wrong” text is found
 
 How to run it locally
 First create a virtual environment using python version 3.10
@@ -70,6 +70,7 @@ Setup (github)
 The modules must be installed in the specific versions specified by the requirements document
 In the settings of the github repository, under actions → general → workflow permissions, set it to read and write permissions
 In github secrets, settings → secrets and variables → actions, you must have 3 secrets, GROUP_EMAIL containing the email address of the recipient email, SENDER_EMAIL containing the email address of the sender, and SENDER_PASS containing the password of the sender email
+For improved security recommended to use app password for PassOfSender
 
 Testing:
 setup_counter - print the return value of the function and if its printing the same value as what’s stored by the PelitaCounter.txt file then it is working
