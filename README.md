@@ -5,16 +5,21 @@ This program will search through the Iklan Tawaran category on the Pelita Brunei
 __TenderScanner.py__
 
 Modules:
+
 **Selenium**
 - Allows the program to open a web browser (In this case Chrome)
 - Allows the program to interact with web browser (open pages using URL, search through the page and more)
 - Used for webscraping
+ 
 **Requests**
 - Used for webscraping
+ 
 **Email**
 - Allows the program to log into an email and send an email using that account
+ 
 **cv2**
 - Allows for image processing
+
 **Pytesseract**
 - Used to convert the image file to text
 **smtplib**
