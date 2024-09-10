@@ -76,10 +76,10 @@ This program will search through the Iklan Tawaran category on the Pelita Brunei
 4. Since you won’t be able to use github secrets you must replace the SenderOfMail, ReceiverOfMail, PassOfSender assignment to the actual values you wish to use.
 5. Recommended to use an app password for the PassOfSender which has limited access to the email account in case the password is leaked.
 
-<ins>Setup (github):</ins>
-The modules must be installed in the specific versions specified by the requirements document
-In the settings of the github repository, under actions → general → workflow permissions, set it to read and write permissions
-In github secrets, settings → secrets and variables → actions, you must have 3 secrets, GROUP_EMAIL containing the email address of the recipient email, SENDER_EMAIL containing the email address of the sender, and SENDER_PASS containing the password of the sender email
+<ins>Setup (github):</ins> \n
+The modules must be installed in the specific versions specified by the requirements document \n
+In the settings of the github repository, under actions → general → workflow permissions, set it to read and write permissions \n
+In github secrets, settings → secrets and variables → actions, you must have 3 secrets, GROUP_EMAIL containing the email address of the recipient email, SENDER_EMAIL containing the email address of the sender, and SENDER_PASS containing the password of the sender email \n
 For improved security recommended to use app password for PassOfSender
 
 <ins>Testing:</ins>
