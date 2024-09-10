@@ -144,4 +144,5 @@ def __main__():
     
     driver.quit()
 
-__main__()
+if __name__ == '__main__':
+    __main__()
