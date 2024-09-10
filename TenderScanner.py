@@ -82,13 +82,19 @@ def text_extraction(image_path, output_path):
     print("Text extracted and saved to file!")
 
 #Procedure to send email
-def send_email(sender, receiver, password, email_body, subject="Tender"):
+def send_email(sender, receiver, password, email_body, image_path, subject="Tender"):
     try:
         msg = EmailMessage()
         msg.set_content(email_body, charset='utf-8')
         msg['Subject'] = subject
         msg['From'] = sender
         msg['To'] = receiver
+
+        with open(image_path,'rb') as file:
+            msg.add_attachment(file.read(),
+                                maintype = 'image',
+                                subtype = 'jpeg',
+                                filename = "PelitaImage.jpg")
 
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
@@ -128,7 +134,7 @@ def __main__():
             file_name = os.path.join(os.path.dirname(__file__), 'PelitaImage.jpg')
             text_extraction(file_name, output_file)
             email_body = read_text(output_file)
-            send_email(SenderOfMail, ReceiverOfMail, PassOfSender, email_body)
+            send_email(SenderOfMail, ReceiverOfMail, PassOfSender, email_body, file_name)
             os.remove("PelitaImage.jpg")
 
         counter += 1
