@@ -120,7 +120,7 @@ def __main__():
     while response.status_code == 200:
         driver.get(site_url)
 
-        if "Sorry, something went wrong" in driver.page_source:
+        if "Sorry, something went wrong" in driver.page_source or "JAWATAN KOSONG" in driver.page_source:
             print("Counter =", counter)
             driver.quit()
             save_counter(counter)
