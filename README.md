@@ -1,10 +1,10 @@
-#TenderScraper
+# TenderScraper
 
 This program will search through the Iklan Tawaran category on the Pelita Brunei site and send an email to the tender scraper group email containing any new jobs posted at 8am everyday
 
-__TenderScanner.py__
+## __TenderScanner.py__
 
-Modules:
+__Modules:__
 
 **Selenium**
 - Allows the program to open a web browser (In this case Chrome)
