@@ -1,40 +1,42 @@
-#TenderScraper
+###TenderScraper
+
 This program will search through the Iklan Tawaran category on the Pelita Brunei site and send an email to the tender scraper group email containing any new jobs posted at 8am everyday
 
-TenderScanner.py
+__TenderScanner.py__
+
 Modules:
-Selenium
+**Selenium**
 - Allows the program to open a web browser (In this case Chrome)
 - Allows the program to interact with web browser (open pages using URL, search through the page and more)
 - Used for webscraping
-Requests
+**Requests**
 - Used for webscraping
-Email
+**Email**
 - Allows the program to log into an email and send an email using that account
-cv2
+**cv2**
 - Allows for image processing
-Pytesseract
+**Pytesseract**
 - Used to convert the image file to text
-smtplib 
+**smtplib**
 - This is the type of email protocol being used to send the email
-re
+**re**
 - This is used to allow for the program to search for the text which indicates that there are no more sites to search
-Urllib3
+**Urllib3**
 - Used to open website using URL
 
 Variables:
-urlconstant - assigned the main part of the url to direct the website to the iklan tawaran section of the Pelita Brunei website
-SenderOfMail - contains the email address of the sender
-PassOfSender - contains the password of the sender email since it must be logged into in order to send an email
-ReceiverOfMail - contains the email address of the recipient email address
-counter - holds the pointer towards the correct website of Pelita Brunei
-site_url - holds the url of the site on Pelita Brunei to search for the image
-driver - holds the chrome browser
-response - holds the data of the site opened
-output_file - contains the file path of “tendertext.txt”
-image_url - contains the url of the image which needs to be downloaded and scanned
-file_name - holds the file path to the “PelitaImage.jpg” file
-email_body - contains the text read from the tendertext file
+**urlconstant** - assigned the main part of the url to direct the website to the iklan tawaran section of the Pelita Brunei website
+**SenderOfMail** - contains the email address of the sender
+**PassOfSender** - contains the password of the sender email since it must be logged into in order to send an email
+**ReceiverOfMail** - contains the email address of the recipient email address
+**counter** - holds the pointer towards the correct website of Pelita Brunei
+**site_url** - holds the url of the site on Pelita Brunei to search for the image
+**driver** - holds the chrome browser
+**response** - holds the data of the site opened
+**output_file** - contains the file path of “tendertext.txt”
+**image_url** - contains the url of the image which needs to be downloaded and scanned
+**file_name** - holds the file path to the “PelitaImage.jpg” file
+**email_body** - contains the text read from the tendertext file
 
 Subroutines:
 setup_counter - this function will open the PelitaCounter file and returns the value stored in it which points to the exact website of Pelita Brunei to open
