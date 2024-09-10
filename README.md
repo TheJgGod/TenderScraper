@@ -32,7 +32,7 @@ __Modules:__
 **Urllib3**
 - Used to open website using URL
 
-Variables:
+__Variables:__
 - **urlconstant** - assigned the main part of the url to direct the website to the iklan tawaran section of the Pelita Brunei website
 - **SenderOfMail** - contains the email address of the sender
 - **PassOfSender** - contains the password of the sender email since it must be logged into in order to send an email
@@ -46,7 +46,7 @@ Variables:
 - **file_name** - holds the file path to the “PelitaImage.jpg” file
 - **email_body** - contains the text read from the tendertext file
 
-Subroutines:
+__Subroutines:__
 - **setup_counter** - this function will open the PelitaCounter file and returns the value stored in it which points to the exact website of Pelita Brunei to open
 - **save_counter** - this procedure takes the current counter variable as a parameter which points to the next web address to view and saves it in the PelitaCounter file
 - **setup_webdriver** - this function opens a chrome webdriver. It is opened in headless mode so that it does not show the chrome webdriver on the screen (this is only helpful while running locally)
@@ -57,7 +57,7 @@ Subroutines:
 - **send_email** - this procedure takes sender, receiver, password, email_body and subject as parameters. It uses these to send an email
 - **read_text** - this function takes the path of the tendertext file as a parameter and reads the text file
 
-Main program:
+__Main program:__
 1. First the value from the Pelita counter is read
 2. The url of the site is then obtained and its data is obtained
 3. The web page is opened
@@ -69,12 +69,12 @@ Main program:
 9. The counter value is then saved and the next web page is opened
 10. Then steps 3 to 8 are repeated until the response code != 200 or the “Sorry, something went wrong” text is found
 
-How to run it locally
-First create a virtual environment using python version 3.10
-Install the necessary modules from the requirements.txt file
-The pelita counter must contain a valid number and the tendertext must be present
-Since you won’t be able to use github secrets you must replace the SenderOfMail, ReceiverOfMail, PassOfSender assignment to the actual values you wish to use.
-Recommended to use an app password for the PassOfSender which has limited access to the email account in case the password is leaked.
+__How to run it locally:__
+1. First create a virtual environment using python version 3.10
+2. Install the necessary modules from the requirements.txt file
+3. The pelita counter must contain a valid number and the tendertext must be present
+4. Since you won’t be able to use github secrets you must replace the SenderOfMail, ReceiverOfMail, PassOfSender assignment to the actual values you wish to use.
+5. Recommended to use an app password for the PassOfSender which has limited access to the email account in case the password is leaked.
 
 Setup (github)
 The modules must be installed in the specific versions specified by the requirements document
