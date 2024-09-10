@@ -4,7 +4,7 @@ This program will search through the Iklan Tawaran category on the Pelita Brunei
 
 ## __TenderScanner.py__
 
-__Modules:__
+<ins>Modules:</ins>
 
 **Selenium**
 - Allows the program to open a web browser (In this case Chrome)
