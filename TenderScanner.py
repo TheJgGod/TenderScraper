@@ -17,17 +17,6 @@ import smtplib
 import re
 import urllib3
 import unittest
-import logging
-
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG,  # Set the logging level to DEBUG
-    format='%(asctime)s - %(levelname)s - %(message)s',  # Log format
-    handlers=[
-        logging.StreamHandler()  # Output logs to the console
-        # You can add more handlers here (e.g., logging.FileHandler for file logging)
-    ]
-)
 
 urlconstant = "https://www.pelitabrunei.gov.bn/Lists/IklanIklan/NewDisplayForm.aspx?ID="
 SenderOfMail = os.environ["sender_email"]
@@ -40,7 +29,6 @@ def setup_counter():
         with open("PelitaCounter.txt", 'r') as f:
             return f.readline()
     except IOError:
-        logging.error("PelitaCounter file cannot be found")
         #sys.exit("Pelita Counter file cannot be found")
         return "PelitaCounter file cannot be found"
 
@@ -56,14 +44,11 @@ def setup_webdriver():
         options.add_argument("--headless")
         driver = webdriver.Chrome(service=ChromeService(), options=options)
         driver.maximize_window()
-        logging.info("Webdriver setup successful")
         return driver
     except WebDriverException as e:
-        logging.error("Error initializing WebDriver: {e}")
         #sys.exit("Error initializing WebDriver")
         return None
     except Exception as e:
-        logging.error("Unexpected error occured: {e}")
         #sys.exit("Unexpected error occured when initializing WebDriver")
         return None
 
@@ -87,10 +72,8 @@ def imagesearch(driver):
             continue
     
     if len(image_URLS) >= 8:
-        logging.info("Image URL:", image_URLS[7])
         return image_URLS[7]
     else:
-        logging.error("Insufficient number of images")
         #sys.exit("Insufficient number of images")
         return "Insufficient number of images"
 
@@ -104,10 +87,8 @@ def image_download(image_url):
         response = requests.get(image_url)
         with open("PelitaImage.jpg", 'wb') as file:
             file.write(response.content)
-        logging.info("Image downloaded successfully!")
         return "Image downloaded successfully!"
     except requests.exceptions.RequestException as e:
-        logging.error("Error occured during image download")
         #sys.exit("Error occured during image download")
         return "Error occured during image download"
 
@@ -119,7 +100,6 @@ def text_extraction(image_path, output_path):
         
         # Check if the image was loaded successfully
         if image is None:
-            logging.error("Image file not found or cannot be opened: %s", image_path)
             #sys.exit("Image file not found or cannot be opened")
             return "Image file not found or cannot be opened"
         
@@ -127,18 +107,15 @@ def text_extraction(image_path, output_path):
         try:
             text = pytesseract.image_to_string(image)
         except Exception as e:
-            logging.error("Error extracting text from image: %s", e)
             #sys.exit("Error extracting text from image")
             return "Error extracting text from image"
         
         # Write text to the file
         with open(output_path, 'w') as f:
             f.write(text)
-        logging.info("Text extracted and saved to file: %s", output_path)
         return "Text extracted and saved to file!"
     
     except Exception as e:
-        logging.error("An unexpected error occurred: %s", e)
         #sys.exit("An unexpected error occurred")
         return "An unexpected error occurred"
 
@@ -159,7 +136,6 @@ def send_email(sender, receiver, password, email_body, image_path, subject="Tend
                                     filename = "PelitaImage.jpg")
 
         except FileNotFoundError:
-            logging.error("Image file not found: %s", image_path)
             #sys.exit( "Image file not found")
             return "Image file not found"
 
@@ -168,16 +144,13 @@ def send_email(sender, receiver, password, email_body, image_path, subject="Tend
                 server.starttls()
                 server.login(sender, password)
                 server.send_message(msg)
-            logging.info("Email has been sent successfully!")
             return "Email sent successfully"
 
         except smtplib.SMTPAuthenticationError:
-            logging.error("Login failed for sender %s", sender)
             #sys.exit("Login failed, email or password incorrect")
             return "Login failed, email or password incorrect"
 
     except Exception as e:
-        logging.error("An error occurred while sending email: %s", e)
         #sys.exit("An error occured while sending email")
         return "An error occured while sending email"
 
@@ -188,7 +161,6 @@ def read_text(output_file):
         with open(output_file, 'r') as textfile:
             return textfile.read()
     except IOError:
-        logging.error("Text file not found %s", output_file)
         #sys.exit("Text file not found when trying to read from file")
         return "Text file not found when trying to read from file"
 
