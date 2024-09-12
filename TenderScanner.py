@@ -64,6 +64,15 @@ def setup_webdriver():
         #sys.exit("Unexpected error occured when initializing WebDriver")
         return None
 
+def extract_heading_text(driver, url):
+    try:
+        driver.get(url)
+        heading = driver.find_element(By.TAG_NAME, "h1").text
+        return heading
+    except Exception as e:
+        logging.error(f"Failed to extract heading: {e}")
+        return "Tender"
+
 #Function to search for image URL
 def imagesearch(driver):
     image_jpg_nodes = driver.find_elements(By.CSS_SELECTOR, "[data-test=\"photo-grid-masonry-img\"]")
@@ -204,7 +213,7 @@ def __main__():
             print("Counter =", counter)
             driver.quit()
             save_counter(counter)
-            print("Search complete")
+            logging.info("Search complete")
             sys.exit(0)
 
         if "JAWATAN KOSONG" not in driver.page_source:
@@ -215,7 +224,8 @@ def __main__():
                 file_name = os.path.join(os.path.dirname(__file__), 'PelitaImage.jpg')
                 extraction_result = text_extraction(file_name, output_file)
                 email_body = read_text(output_file)
-                result = send_email(SenderOfMail, ReceiverOfMail, PassOfSender, email_body, file_name)
+                subject = extract_heading_text(driver,site_url)
+                result = send_email(SenderOfMail, ReceiverOfMail, PassOfSender, email_body, file_name, subject)
                 os.remove("PelitaImage.jpg")
 
         counter += 1
