@@ -1,1 +1,9 @@
+name: Run test_tenderscanner.py
 
+on:
+  push:
+    branches:
+      - main
+  pull:
+    branches:
+      - main
