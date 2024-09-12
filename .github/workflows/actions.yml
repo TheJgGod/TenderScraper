@@ -3,7 +3,7 @@ name: Run TenderScanner.py
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at 8 AM UTC
+    - cron: '0 0 * * *'  # Runs daily at 12 AM UTC
 
 env:
   sender_email: ${{ secrets.SENDER_EMAIL }}
