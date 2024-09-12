@@ -74,7 +74,7 @@ def extract_heading_text(driver, url):
         return "Tender"
 
 #Function to search for image URL
-def imagesearch(driver):
+def image_search(driver):
     image_jpg_nodes = driver.find_elements(By.CSS_SELECTOR, "[data-test=\"photo-grid-masonry-img\"]")
 
     image_URLS = []
@@ -217,7 +217,7 @@ def __main__():
             sys.exit(0)
 
         if "JAWATAN KOSONG" not in driver.page_source:
-            image_url = imagesearch(driver)
+            image_url = image_search(driver)
 
             if image_url:
                 download_result = image_download(image_url)
