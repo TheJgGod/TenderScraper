@@ -67,7 +67,7 @@ def setup_webdriver():
 def extract_heading_text(driver, url):
     try:
         driver.get(url)
-        heading = driver.find_element(By.TAG_NAME, "h1").text
+        heading = driver.find_element(By.TAG_NAME, "h4").text
         return heading
     except Exception as e:
         logging.error(f"Failed to extract heading: {e}")
