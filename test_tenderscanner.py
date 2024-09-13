@@ -3,7 +3,7 @@ import os
 import requests
 from smtplib import SMTPAuthenticationError
 from unittest.mock import patch, MagicMock
-from TenderScanner import read_text, text_extraction, image_download, send_email, imagesearch, setup_counter
+from TenderScanner import read_text, text_extraction, image_download, send_email, image_search, setup_counter
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
