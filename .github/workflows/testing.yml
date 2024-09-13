@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+env:
+  sender_email: ${{ secrets.SENDER_EMAIL }}
+  sender_pass: ${{ secrets.SENDER_PASS }}
+  group_email: ${{ secrets.GROUP_EMAIL }}
+
 jobs:
   test:
     runs-on: macos-latest
