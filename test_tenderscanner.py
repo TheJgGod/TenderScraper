@@ -54,7 +54,7 @@ class TestTenderScraper(unittest.TestCase):
 
         # Patch WebDriverWait with the mock
         with patch('selenium.webdriver.support.ui.WebDriverWait', return_value=mock_wait):
-            result = imagesearch(mock_driver)
+            result = image_search(mock_driver)
 
         # Assert that "Insufficient number of images" is returned
         self.assertEqual(result, "Insufficient number of images")
