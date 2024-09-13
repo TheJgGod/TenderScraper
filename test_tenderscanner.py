@@ -65,7 +65,7 @@ class TestTenderScraper(unittest.TestCase):
         receiver = "testreceiver@gmail.com"
         password = "password123"
         email_body = "This is a test email"
-        image_path = os.path.join(os.path.dirname(__file__), 'PelitaImage.jpg')
+        image_path = "test_image.jpg"
         subject = "Test Subject"
 
         mock_smtp_instance = MagicMock()
@@ -81,7 +81,7 @@ class TestTenderScraper(unittest.TestCase):
         receiver = "testreceiver@gmail.com"
         password = "password123"
         email_body = "This is a test email"
-        image_path = os.path.join(os.path.dirname(__file__), 'non-existant.jpg')
+        image_path = "non-existant.jpg"
         subject = "Test Subject"
 
         mock_smtp_instance = MagicMock()
@@ -96,7 +96,7 @@ class TestTenderScraper(unittest.TestCase):
         receiver = "testreceiver@gmail.com"
         password = "incorrect_pass"
         email_body = "This is a test email"
-        image_path = "PelitaImage.jpg"
+        image_path = "test_image.jpg"
         subject = "Test Subject"
 
         mock_smtp_instance = MagicMock()
