@@ -34,6 +34,7 @@ This program will search through the Iklan Tawaran category on the Pelita Brunei
 
 <ins>Variables:</ins>
 - **urlconstant** - assigned the main part of the url to direct the website to the iklan tawaran section of the Pelita Brunei website
+- **EmailService** - Set the value to either "SMTP" or "RESEND". Use the credentials appropriately for which email service (but not both)
 - **SenderOfMail** - contains the email address of the sender
 - **PassOfSender** - contains the password of the sender email since it must be logged into in order to send an email
 - **ReceiverOfMail** - contains the email address of the recipient email address
