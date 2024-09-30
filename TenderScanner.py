@@ -18,6 +18,7 @@ import re
 import urllib3
 import unittest
 import logging
+import resend
 
 # Configure logging
 logging.basicConfig(
@@ -27,9 +28,10 @@ logging.basicConfig(
 )
 
 urlconstant = "https://www.pelitabrunei.gov.bn/Lists/IklanIklan/NewDisplayForm.aspx?ID="
-SenderOfMail = os.environ["sender_email"]
-ReceiverOfMail = os.environ["group_email"]
-PassOfSender = os.environ["sender_pass"]
+EmailService = os.environ.get("email_service")
+SenderOfMail = os.environ.get("sender_email") 
+ReceiverOfMail = os.environ.get("group_email") 
+PassOfSender = os.environ.get("sender_pass")
 
 #Loads the counter of which site to look at
 def setup_counter():
@@ -74,7 +76,7 @@ def extract_heading_text(driver, url):
         return "Tender"
 
 #Function to search for image URL
-def imagesearch(driver):
+def image_search(driver):
     image_jpg_nodes = driver.find_elements(By.CSS_SELECTOR, "[data-test=\"photo-grid-masonry-img\"]")
 
     image_URLS = []
@@ -148,8 +150,7 @@ def text_extraction(image_path, output_path):
         #sys.exit("An unexpected error occurred")
         return "An unexpected error occurred"
 
-#Procedure to send email
-def send_email(sender, receiver, password, email_body, image_path, subject="Tender"):
+def send_by_SMTP(sender, receiver, password, email_body, image_path, subject="Tender"):
     try:
         msg = EmailMessage()
         msg.set_content(email_body, charset='utf-8')
@@ -187,6 +188,32 @@ def send_email(sender, receiver, password, email_body, image_path, subject="Tend
         #sys.exit("An error occured while sending email")
         return "An error occured while sending email"
 
+def send_by_resend(sender, receiver, password, email_body, image_path, subject="Tender"):
+    resend.api_key = password
+
+    f: bytes = open(image_path, 'rb').read()
+    attachment: resend.Attachment = {
+        "content": list(f), 
+        "filename": "PelitaImage.jpg",
+    }
+    params: resend.Emails.SendParams = {
+        "from": f"Brunei Tender Scraper <{sender}>",
+        "to": [receiver],
+        "subject": subject,
+        "html": email_body,
+        "attachments": [attachment],
+    }
+
+    email = resend.Emails.send(params)
+    return email
+
+#Procedure to send email
+def send_email(sender, receiver, password, email_body, image_path, subject="Tender"):
+    if os.environ["EMAIL_SERVICE"] == "RESEND":
+        return send_by_resend(sender, receiver, password, email_body, image_path, subject)
+    elif os.environ["EMAIL_SERVICE"] == "SMTP":
+        return send_by_SMTP(sender, receiver, password, email_body, image_path, subject)
+
 
 #Function to read text for the email body
 def read_text(output_file):
@@ -198,7 +225,7 @@ def read_text(output_file):
         #sys.exit("Text file not found when trying to read from file")
         return "Text file not found when trying to read from file"
 
-def __main__():
+def main():
     counter = int(setup_counter())
     site_url = get_next_url(counter, urlconstant)
     driver = setup_webdriver()
@@ -217,9 +244,7 @@ def __main__():
             sys.exit(0)
 
         if "JAWATAN KOSONG" not in driver.page_source:
-            image_url = imagesearch(driver)
-
-            if image_url:
+            if image_url := image_search(driver):
                 download_result = image_download(image_url)
                 file_name = os.path.join(os.path.dirname(__file__), 'PelitaImage.jpg')
                 extraction_result = text_extraction(file_name, output_file)
@@ -232,11 +257,11 @@ def __main__():
         save_counter(counter)
         site_url = get_next_url(counter, urlconstant)
         response = requests.get(site_url)
-    
+
     driver.quit()
 
 
 if __name__ == "__main__":
-    __main__()
+    main()
 
 
